@@ -1,0 +1,28 @@
+docker pull osrf/ros:melodic-desktop-full
+
+docker run -it \
+    --user=$(id -u $USER):$(id -g $USER) \
+    --env="DISPLAY" \
+    --env "TERM=xterm-256color" \
+    --workdir="/home/$USER" \
+    --name="melodic" \
+    --volume="/home/$USER:/home/$USER" \
+    --volume="/etc/group:/etc/group:ro" \
+    --volume="/etc/passwd:/etc/passwd:ro" \
+    --volume="/etc/shadow:/etc/shadow:ro" \
+    --volume="/etc/sudoers.d:/etc/sudoers.d:ro" \
+    --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+    osrf/ros:melodic-desktop-full
+    
+docker start melodic
+docker attach melodic
+
+docker start melodic -a
+
+container içinde ctrl+p ctrl-q (ctrl+pq) detach oluyor ve container çalışmaya devam ediyor
+
+TERMINATOR AÇILMAMA HATASI
+sudo apt-get install dbus-x11
+
+NOUVEAU DRIVER HATASI
+echo "export DISPLAY=:0" >> $HOME/.bashrc
